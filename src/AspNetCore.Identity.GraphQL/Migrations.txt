@@ -1,0 +1,10 @@
+Add-Migration InitialMigration -Project AspNetCore.Identity.Infrastructure -v
+...
+Using project 'src\AspNetCore.Identity.GraphQL'.
+Using startup project 'src\AspNetCore.Identity.GraphQL'.
+Build started...
+Build succeeded.
+....
+To undo this action, use Remove-Migration.
+
+PM> Update-Database
