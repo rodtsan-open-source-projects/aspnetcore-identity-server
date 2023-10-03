@@ -6,7 +6,7 @@ using AspNetCore.Identity.Core.Interfaces;
 using AspNetCore.Identity.Core.Services;
 using AspNetCore.Identity.GraphQL.Schema;
 using AspNetCore.Identity.Infrastructure;
-using AspNetCore.Identity.Infrastructure.ConfigurationSettings;
+using AspNetCore.Identity.Infrastructure.ConfigSettings;
 using AspNetCore.Identity.Infrastructure.Middlewares;
 using FluentValidation;
 using MediatR;
@@ -75,7 +75,7 @@ namespace AspNetCore.Identity.GraphQL
 			builder.Services.AddSingleton(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
 			builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 			builder.Services.AddTransient<ExceptionHandlingMiddleware>();
-		    builder.Services.AddTransient<IEmailTemplate, EmailTemplate>();
+		    builder.Services.AddTransient<IEmailTemplateOptions, EmailTemplateOptions>();
 			builder.Services.AddTransient<ISmtpEmailSender, SmtpEmailSender>();
 			builder.Services.AddTransient<IQueryService, QueryService>();
 

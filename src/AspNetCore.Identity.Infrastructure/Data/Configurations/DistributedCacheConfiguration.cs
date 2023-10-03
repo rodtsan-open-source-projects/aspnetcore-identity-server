@@ -1,13 +1,8 @@
 ﻿using AspNetCore.Identity.Core.Models;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace AspNetCore.Identity.Infrastructure.Data.EntityTypeConfigurations;
+namespace AspNetCore.Identity.Infrastructure.Data.Configurations;
 
 internal class DistributedCacheConfiguration : IEntityTypeConfiguration<DistributedCache>
 {

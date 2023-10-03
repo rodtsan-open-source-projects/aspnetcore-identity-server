@@ -1,7 +1,7 @@
 ﻿using AspNetCore.Identity.Core.Interfaces;
 using AspNetCore.Identity.Core.Models;
 using AspNetCore.Identity.Core.Services;
-using AspNetCore.Identity.Infrastructure.ConfigurationSettings;
+using AspNetCore.Identity.Infrastructure.ConfigSettings;
 using AspNetCore.Identity.Infrastructure.Data;
 using IdentityModel;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -90,7 +90,7 @@ namespace AspNetCore.Identity.Infrastructure
 
 			services.AddTransient<ITokenProvider, TokenProvider>();
 			services.AddTransient<ISmtpEmailSender, SmtpEmailSender>();
-			services.AddTransient<IEmailTemplate, EmailTemplate>();
+			services.AddTransient<IEmailTemplateOptions, EmailTemplateOptions>();
 		}
 	}
 }

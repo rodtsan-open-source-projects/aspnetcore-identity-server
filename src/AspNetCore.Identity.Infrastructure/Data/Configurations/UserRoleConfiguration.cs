@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace AspNetCore.Identity.Infrastructure.Data.EntityTypeConfigurations;
+namespace AspNetCore.Identity.Infrastructure.Data.Configurations;
 
 internal class UserRoleConfiguration : IEntityTypeConfiguration<UserRole>
 {

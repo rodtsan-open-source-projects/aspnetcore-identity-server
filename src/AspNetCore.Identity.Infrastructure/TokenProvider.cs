@@ -1,5 +1,5 @@
 ﻿using AspNetCore.Identity.Core.Interfaces;
-using AspNetCore.Identity.Infrastructure.ConfigurationSettings;
+using AspNetCore.Identity.Infrastructure.ConfigSettings;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -40,11 +40,9 @@ public class TokenProvider : ITokenProvider
 	public string GenerateRefreshToken()
 	{
 		var randomNumber = new byte[32];
-		using (var rng = RandomNumberGenerator.Create())
-		{
-			rng.GetBytes(randomNumber);
-			return Convert.ToBase64String(randomNumber);
-		}
+		using var rng = RandomNumberGenerator.Create();
+		rng.GetBytes(randomNumber);
+		return Convert.ToBase64String(randomNumber);
 	}
 
 	public async Task<ClaimsIdentity> GetPrincipalFromExpiredToken(string expiredToken)
@@ -58,16 +56,10 @@ public class TokenProvider : ITokenProvider
 			ValidateLifetime = false //here we are saying that we don't care about the token's expiration date
 		};
 		var tokenHandler = new JwtSecurityTokenHandler();
-		// SecurityToken securityToken;
-		// var token = tokenHandler.ReadJwtToken(expiredToken);
-		// var principal = new ClaimsPrincipal(new ClaimsIdentity(token.Claims));
 		
 		var result = await tokenHandler.ValidateTokenAsync(expiredToken, tokenValidationParameters);
 		if (!result.IsValid)
 			throw new SecurityTokenException("Invalid token");
-		//var jwtSecurityToken = securityToken as JwtSecurityToken;
-		//if (jwtSecurityToken == null || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
-		//	throw new SecurityTokenException("Invalid token");
 		return result.ClaimsIdentity; ;
 	}
 }

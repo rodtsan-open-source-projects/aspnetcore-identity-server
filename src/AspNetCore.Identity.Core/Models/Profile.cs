@@ -4,13 +4,13 @@ public class Profile : EntityBase
 {
 	public Guid ProfileId { get; set; }
 	public User User { get; set; }
-	public required string FirstName { get; set; }
-	public required string LastName { get; set; }
+	public string FirstName { get; set; } = string.Empty;
+	public string LastName { get; set; } = string.Empty;
 	public string? ProfilePhotoUrl { get; set; }
 	public string? GithubUrl { get; set; }
 	public string? LinkedInUrl { get; set; }
 	public string? TwitterUrl { get; set; }
-	public required string Email { get; set; }
+	public string Email { get; set; } = string.Empty;
 	public string? Phone { get; set; }
 	public string? PhotoThumbUrl { get; set; }
 	public DateTime? BirthDate { get; set; }

@@ -10,8 +10,8 @@ namespace AspNetCore.Identity.Core.Commands
     public class SendResetPasswordCommandHandler : ICommandHandler<SendResetPasswordCommand, CommandHandlerResponse>
     {
         private readonly UserManager<User> _userManager;
-        private readonly IEmailTemplate _emailTemplate;
-        public SendResetPasswordCommandHandler(UserManager<User> userManager, IEmailTemplate emailTemplate)
+        private readonly IEmailTemplateOptions _emailTemplate;
+        public SendResetPasswordCommandHandler(UserManager<User> userManager, IEmailTemplateOptions emailTemplate)
         {
             _userManager = userManager;
            _emailTemplate = emailTemplate;

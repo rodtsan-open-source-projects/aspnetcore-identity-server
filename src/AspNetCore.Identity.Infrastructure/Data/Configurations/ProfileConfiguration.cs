@@ -3,7 +3,7 @@ using AspNetCore.Identity.Core.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace AspNetCore.Identity.Infrastructure.Data.EntityTypeConfigurations;
+namespace AspNetCore.Identity.Infrastructure.Data.Configurations;
 
 internal class ProfileConfiguration : IEntityTypeConfiguration<Profile>
 {

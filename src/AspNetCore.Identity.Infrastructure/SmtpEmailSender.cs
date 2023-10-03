@@ -1,6 +1,6 @@
 ﻿using AspNetCore.Identity.Core.Extensions;
 using AspNetCore.Identity.Core.Interfaces;
-using AspNetCore.Identity.Infrastructure.ConfigurationSettings;
+using AspNetCore.Identity.Infrastructure.ConfigSettings;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Net;
@@ -22,21 +22,20 @@ public class SmtpEmailSender : ISmtpEmailSender
 	{
 		using var client = new SmtpClient(_smtpSettings.SmtpHost, _smtpSettings.SmtpPort);
 		client.Credentials = new NetworkCredential(_smtpSettings.SmtpUserName, _smtpSettings.SmtpPassword);
+		var from = _smtpSettings.From;
 		var message = new MailMessage
 		{
-			From = new MailAddress(_smtpSettings.From.Name, _smtpSettings.From.Email),
+			From = new MailAddress(from.Email, from.DisplayName),
 			Subject = subject,
 			IsBodyHtml = true,
 			Body = body
 		};
-		foreach (var bcc in _smtpSettings.BccEmails.Split(","))
-		{
-			if (RegexUtilities.IsValidEmail(bcc))
-				message.Bcc.Add(new MailAddress(bcc));
-		}
+		foreach (var bcc in _smtpSettings.Bcc)
+			message.Bcc.Add(new MailAddress(bcc.Email, bcc.DisplayName));
+
 		message.To.Add(new MailAddress(email, displayName));
 		await client.SendMailAsync(message);
 
-		_logger.LogWarning("Sending email to {to} from {from} with subject {subject}.", email, _smtpSettings.From.Email, subject);
+		_logger.LogWarning("Sending email to {to} from {from} with subject {subject}.", email, from.Email, subject);
 	}
 }

@@ -8,13 +8,13 @@ using Microsoft.AspNetCore.Identity;
 namespace AspNetCore.Identity.Core.Commands;
 public class SignUpCommandHandler : ICommandHandler<SignUpCommand, CommandHandlerResponse>
 {
-    private const string DEFAULT_ROLE = "users"; // 
+    private const string DEFAULT_ROLE = "user"; // 
     private readonly UserManager _userManager;
     private readonly RoleManager<Role> _roleManager;
-    private readonly IEmailTemplate _emailTemplate;
+    private readonly IEmailTemplateOptions _emailTemplate;
     public SignUpCommandHandler(UserManager userManager,
         RoleManager<Role> roleManager,
-		IEmailTemplate emailTemplate)
+		IEmailTemplateOptions emailTemplate)
     {
         _userManager = userManager;
         _roleManager = roleManager;
@@ -27,11 +27,11 @@ public class SignUpCommandHandler : ICommandHandler<SignUpCommand, CommandHandle
         {
             UserName = request.Email.ToLower(),
             Email = request.Email.ToLower(),
-            Profile = new Profile()
+            Profile = new Profile
             {
                 FirstName = request.FirstName,
                 LastName = request.LastName,
-                Email = request.Email.ToLower()
+                Email = request.Email.ToLower(),
             },
         };
 

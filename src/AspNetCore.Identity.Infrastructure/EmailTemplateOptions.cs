@@ -5,18 +5,16 @@ using System.Web;
 
 namespace AspNetCore.Identity.Infrastructure
 {
-	public class EmailTemplate : IEmailTemplate
+	public class EmailTemplateOptions : IEmailTemplateOptions
 	{
-		private readonly ILogger<EmailTemplate> _logger;
 		private readonly ISmtpEmailSender _emailSender;
 		private readonly HttpContext? _httpContext;
 		private readonly string _baseUrl;
-		public EmailTemplate(ILogger<EmailTemplate> logger, ISmtpEmailSender emailSender, IHttpContextAccessor httpContextAccessor)
+		public EmailTemplateOptions(ISmtpEmailSender emailSender, IHttpContextAccessor httpContextAccessor)
 		{
-			_logger = logger;
 			_emailSender = emailSender;
-			_httpContext = httpContextAccessor.HttpContext ?? throw new ArgumentNullException("HttpContextAccessor");
-			_baseUrl = _httpContext.Request.BaseUrl() ?? "";
+			_httpContext = httpContextAccessor.HttpContext;
+			_baseUrl = _httpContext?.Request.BaseUrl() ?? "";
 		}
 
 		public async Task SendEmailConfirmationAsync(string email, string displayName, string userId, string token)
@@ -26,7 +24,6 @@ namespace AspNetCore.Identity.Infrastructure
 			var contentString = await GetContentStringAsync("PasswordReset.html");
 			var content = contentString.Replace("{{LINK}}", link);
 			await _emailSender.SendAsync(email, displayName, "Password Reset", content);
-			_logger.LogInformation("Sending email confirmation to {to}.", displayName);
 		}
 
 		public async Task SendPasswordResetAsync(string email, string displayName, string userId, string token)
@@ -36,7 +33,6 @@ namespace AspNetCore.Identity.Infrastructure
 			var contentString = await GetContentStringAsync("PasswordReset.html");
 			var content = contentString.Replace("{{LINK}}", link);
 			await _emailSender.SendAsync(email, displayName, "Password Reset", content);
-			_logger.LogInformation("Sending reset password email to {to}.", displayName);
 		}
 
 		private async Task<string> GetContentStringAsync(string emailTemplatePath)

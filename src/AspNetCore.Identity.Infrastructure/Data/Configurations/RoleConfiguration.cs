@@ -1,21 +1,20 @@
-﻿using AspNetCore.Identity.Core.Enums;
-using AspNetCore.Identity.Core.Models;
+﻿using AspNetCore.Identity.Core.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
+namespace AspNetCore.Identity.Infrastructure.Data.Configurations;
 
-namespace AspNetCore.Identity.Infrastructure.Data.EntityTypeConfigurations;
-internal class UserConfiguration : IEntityTypeConfiguration<User>
+public class RoleConfiguration : IEntityTypeConfiguration<Role>
 {
-	public void Configure(EntityTypeBuilder<User> builder)
+	public void Configure(EntityTypeBuilder<Role> builder)
 	{
-		builder.HasOne(q => q.Profile)
-				.WithOne(q => q.User)
-				.HasForeignKey<Profile>(q => q.ProfileId)
-				.OnDelete(DeleteBehavior.Cascade);
+		builder.HasOne(q => q.CreatedBy)
+			.WithMany()
+			.HasForeignKey(q => q.CreatedById);
 
-		builder.Property(q => q.RefreshToken)
-				.HasMaxLength(120);
+		builder.HasOne(q => q.LastEditedBy)
+			.WithMany()
+			.HasForeignKey(q => q.LastEditedById);
 
 		builder.Property(q => q.LastEditedDate)
 			.HasDefaultValue(DateTime.UtcNow)
